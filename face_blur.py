@@ -2,8 +2,9 @@ import cv2
 import numpy as np
 from mtcnn import MTCNN
 import os
+import argparse
 
-def blur_face(image, factor=3.0):
+def blur_face(image, factor=1.0):
     (h, w) = image.shape[:2]
     kW = int(w/factor)
     kH = int(h/factor)
@@ -70,5 +71,13 @@ def process_directory(input_dir):
             process_image(input_path, output_path)
 
 if __name__ == "__main__":
-    input_directory = input("Enter the path of the directory containing images to process: ")
+    parser = argparse.ArgumentParser(description="Blur faces in images within a specified directory.")
+    parser.add_argument("folder", nargs="?", help="Path to the directory containing images to process")
+    args = parser.parse_args()
+
+    if args.folder:
+        input_directory = args.folder
+    else:
+        input_directory = input("Enter the path of the directory containing images to process: ")
+
     process_directory(input_directory)
