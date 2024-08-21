@@ -1,6 +1,10 @@
 # Changes to the original repository
 
 - source directory can also be set via argument: face_blur.py "c:\test"
+- setup file for windows: setup.bat
+- it will create two subfolders in our input folder
+ - blurred: where it stores the results
+ - unblurred: where it moves the original files to
 
 # Face Blur
 

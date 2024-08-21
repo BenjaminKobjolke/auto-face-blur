@@ -3,6 +3,7 @@ import numpy as np
 from mtcnn import MTCNN
 import os
 import argparse
+import shutil
 
 def blur_face(image, factor=1.0):
     (h, w) = image.shape[:2]
@@ -57,9 +58,14 @@ def process_image(image_path, output_path):
 
 def process_directory(input_dir):
     # Create output directory
-    output_dir = os.path.join(input_dir, "blurred_results")
+    output_dir = os.path.join(input_dir, "blurred")
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
+
+    # Create unblurred directory
+    unblurred_dir = os.path.join(input_dir, "unblurred")
+    if not os.path.exists(unblurred_dir):
+        os.makedirs(unblurred_dir)
 
     image_extensions = ['.jpg', '.jpeg', '.png', '.bmp']
 
@@ -68,7 +74,13 @@ def process_directory(input_dir):
         if any(file.lower().endswith(ext) for ext in image_extensions):
             input_path = os.path.join(input_dir, file)
             output_path = os.path.join(output_dir, file)
-            process_image(input_path, output_path)
+            unblurred_path = os.path.join(unblurred_dir, file)
+            
+            # Move the original image to the unblurred folder
+            shutil.move(input_path, unblurred_path)
+            
+            # Process the image from the unblurred folder
+            process_image(unblurred_path, output_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Blur faces in images within a specified directory.")
