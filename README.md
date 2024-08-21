@@ -1,3 +1,7 @@
+# Changes to the original repository
+
+- source directory can also be set via argument: face_blur.py "c:\test"
+
 # Face Blur
 
 Face Blur is a Python script that automatically detects and blurs faces in images using the MTCNN (Multi-task Cascaded Convolutional Networks) face detection model.
